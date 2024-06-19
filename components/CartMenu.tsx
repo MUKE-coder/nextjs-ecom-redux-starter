@@ -54,71 +54,100 @@ export function CartMenu() {
           </div>
         </button>
       </SheetTrigger>
-      <SheetContent className="w-[400px] sm:w-[540px]">
-        <SheetHeader>
-          <h2 className="scroll-m-20 text-xl font-semibold tracking-tight first:mt-0 border-b pb-3">
-            Shopping Cart ({cartItems.length})
-          </h2>
-        </SheetHeader>
-        {/* CONTENT HWRE */}
-        <div className="">
-          {cartItems.map((item, i) => {
-            return (
-              <div className="flex justify-between gap-4 py-3 border-b ">
-                <Image
-                  width={200}
-                  height={200}
-                  alt="cart image"
-                  src={item.image}
-                  className="w-16 h-16 rounded-lg"
-                />
-                <div className="space-y-2">
-                  <h2 className="text-xs font-medium">{item.name}</h2>
-                  <button
-                    onClick={() => handleRemove(item.id)}
-                    className="text-xs flex items-center text-red-500"
-                  >
-                    <Trash className="w-4 h-4 mr-1" />
-                    <span>Remove</span>
-                  </button>
-                </div>
-                <div className="space-y-2">
-                  <h2 className="text-sx">${item.price}</h2>
-                  <div className="flex items-center space-x-3">
-                    <button className="border shadow rounded flex items-center justify-center w-10 h-7">
-                      <Minus className="w-4 h-4" />
-                    </button>
-
-                    <p>1</p>
-                    <button className="border shadow rounded flex items-center justify-center w-10 h-7 bg-slate-800 text-white">
-                      <Plus className="w-4 h-4" />
+      {cartItems && cartItems.length > 0 ? (
+        <SheetContent className="w-[400px] sm:w-[540px]">
+          <SheetHeader>
+            <h2 className="scroll-m-20 text-xl font-semibold tracking-tight first:mt-0 border-b pb-3">
+              Shopping Cart ({cartItems.length})
+            </h2>
+          </SheetHeader>
+          {/* CONTENT HWRE */}
+          <div className="">
+            {cartItems.map((item, i) => {
+              return (
+                <div
+                  key={i}
+                  className="flex justify-between gap-4 py-3 border-b "
+                >
+                  <Image
+                    width={200}
+                    height={200}
+                    alt="cart image"
+                    src={item.image}
+                    className="w-16 h-16 rounded-lg"
+                  />
+                  <div className="space-y-2">
+                    <h2 className="text-xs font-medium">{item.name}</h2>
+                    <button
+                      onClick={() => handleRemove(item.id)}
+                      className="text-xs flex items-center text-red-500"
+                    >
+                      <Trash className="w-4 h-4 mr-1" />
+                      <span>Remove</span>
                     </button>
                   </div>
-                </div>
-              </div>
-            );
-          })}
+                  <div className="space-y-2">
+                    <h2 className="text-sx">${item.price}</h2>
+                    <div className="flex items-center space-x-3">
+                      <button className="border shadow rounded flex items-center justify-center w-10 h-7">
+                        <Minus className="w-4 h-4" />
+                      </button>
 
-          <div className="space-y-1 py-3 border-b mb-3">
-            <div className="flex items-center justify-between text-sm">
-              <h2 className="font-medium">Total</h2>
-              <p>${totalSum.toFixed(2)}</p>
+                      <p>1</p>
+                      <button className="border shadow rounded flex items-center justify-center w-10 h-7 bg-slate-800 text-white">
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            <div className="space-y-1 py-3 border-b mb-3">
+              <div className="flex items-center justify-between text-sm">
+                <h2 className="font-medium">Total</h2>
+                <p>${totalSum.toFixed(2)}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button variant={"outline"} type="submit">
-              Continue Shopping
+          <SheetFooter>
+            <SheetClose asChild>
+              <Button variant={"outline"} type="submit">
+                Continue Shopping
+              </Button>
+            </SheetClose>
+            <Button asChild>
+              <Link href="/checkout">
+                <span>Proceed to Checkout</span>
+              </Link>
             </Button>
-          </SheetClose>
-          <Button asChild>
-            <Link href="/checkout">
-              <span>Proceed to Checkout</span>
-            </Link>
-          </Button>
-        </SheetFooter>
-      </SheetContent>
+          </SheetFooter>
+        </SheetContent>
+      ) : (
+        <SheetContent className="w-[400px] sm:w-[540px]">
+          <SheetHeader>
+            <h2 className="scroll-m-20 text-xl font-semibold tracking-tight first:mt-0 border-b pb-3">
+              Empty Cart
+            </h2>
+          </SheetHeader>
+          {/* CONTENT HWRE */}
+          <div className="min-h-80  flex-col space-y-4 flex items-center justify-center">
+            <Image
+              src="/empty-cart.png"
+              width={300}
+              height={300}
+              alt="empty cart"
+              className="w-36 h-36 object-cover"
+            />
+            <h2>Your Cart Empty</h2>
+            <SheetClose asChild>
+              <Button asChild size={"sm"} variant={"outline"} type="submit">
+                <Link href="/">Continue Shopping to add Items</Link>
+              </Button>
+            </SheetClose>
+          </div>
+        </SheetContent>
+      )}
     </Sheet>
   );
 }

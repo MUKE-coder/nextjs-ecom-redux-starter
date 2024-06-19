@@ -49,6 +49,11 @@ const cartSlice = createSlice({
       saveItemsToLocalStorage(state.cartItems);
       toast.success("Item Removed Successfully");
     },
+    removeAllProductsFromCart: (state) => {
+      state.cartItems = [];
+      saveItemsToLocalStorage(state.cartItems);
+      // toast.success("All items cleared successfully");
+    },
     incrementQty: (state, action: PayloadAction<number>) => {
       const item = state.cartItems.find(
         (product) => product.id === action.payload
@@ -81,5 +86,6 @@ export const {
   removeProductFromCart,
   incrementQty,
   decrementQty,
+  removeAllProductsFromCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;
